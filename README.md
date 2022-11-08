@@ -2,7 +2,7 @@
 
 JAPF is a web application PHP framework with MVC architecture and minimal configuration.
 
-# Background
+## Background
 
 This framework initially created by me to make cleaner codebases for my projects since I hate how ugly php code can be when the project has become so huge and the code almost unreadable. Thus i created JAPF (Just Another PHP Framework).
 
@@ -12,7 +12,7 @@ Another reason for me to create this is to reduce redundant task that i need to 
 
 By default, this framework use PSR-4 as namespacing autoload. You can configure the autoload using composer or you can just use it manually.
 
-# Contributing
+## Contributing
 
-# License
+## License
 
