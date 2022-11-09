@@ -1,0 +1,29 @@
+{
+    "name": "nrzero/japf",
+    "description": "JAPF is a web application PHP framework",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Daniel Ronaldo Pangestu",
+            "email": "ronaldo.pangestu1@gmail.com"
+        }
+    ],
+    "keywords": [
+        "Framework",
+        "Web Application Framework",
+        "MVC Framework",
+        "PHP Framework"
+    ],
+    "autoload": {
+        "psr-4": {
+            "app\\": "./"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {},
+    "require-dev": {
+        "squizlabs/php_codesniffer": "*"
+    }
+}
