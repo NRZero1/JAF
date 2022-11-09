@@ -12,7 +12,14 @@ Another reason for me to create this is to reduce redundant task that i need to 
 
 By default, this framework use PSR-4 as namespacing autoload. You can configure the autoload using composer or you can just use it manually.
 
+## Documentation
+
+On progress
+
 ## Contributing
+
+Lorem Ipsum
 
 ## License
 
+This framework is licensed under [MIT license](https://opensource.org/licenses/MIT).
