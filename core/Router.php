@@ -6,41 +6,62 @@ class Router
 {
     protected array $routes = [];
     private Request $request;
-    
-    public function __construct()
+    private Response $response;
+    private View $view;
+    public function __construct(Request $request, Response $response)
     {
-        $this->request = new Request();
+        $this->request = new $request;
+        $this->response = new $response;
+        $this->view = new View();
     }
 
-    public function get(string $path, callable $callback)
+    public function get(string $path, string|callable|array $callback)
     {
         $this->routes['get'][$path] = $callback;
-        $callback();
-        // or you can use
-        // call_user_func($callback);
     }
 
-    public function post(string $path, callable $callback)
+    public function post(string $path, string|callable|array $callback)
     {
         $this->routes['post'][$path] = $callback;
-        $callback();
     }
 
     public function resolve()
     {
         $path = $this->request->getPath();
         $method = $this->request->getMethod();
-        /* echo $path;
-        echo $method; */
         $callback = $this->routes[$method][$path] ?? false;
 
         if ($callback === false) {
-            http_response_code(404);
-            exit(http_response_code() . " Not Found");
+            $this->response->setResponseCode(404);
+            exit($this->view->loadView("not_found.php"));
         }
-        echo $callback();
-        /* echo '<pre>';
-        var_dump($this->routes);
-        echo '</pre>'; */
+        if (is_string($callback)) {
+            return $this->view->loadView($callback);
+        }
+        if (is_array($callback)) {
+            $callback[0] = new $callback[0]();
+        }
+        return call_user_func($callback);
     }
+
+    // public function loadView(string $viewAddress)
+    // {
+    //     $layout = $this->renderLayout();
+    //     $view = $this->renderView($viewAddress);
+    //     return str_replace("{content}", $layout, $view);
+    // }
+
+    // public function renderLayout()
+    // {
+    //     ob_start();
+    //     include_once Application::$ROOT_DIR . "/views/dashboard/hero/index.php";
+    //     return ob_get_clean();
+    // }
+
+    // public function renderView(string $view)
+    // {
+    //     ob_start();
+    //     include_once Application::$ROOT_DIR . "/views/$view";
+    //     return ob_get_clean();
+    // }
 }
