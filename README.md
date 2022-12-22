@@ -1,4 +1,4 @@
-# JAPF
+# JAF
 
 JAF is a minimal web application PHP framework with MVC architecture. This framework created using PHP 8.
 
