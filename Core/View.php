@@ -34,7 +34,7 @@ class View
         // echo var_dump($contentAddress);
         foreach ($contentAddress as $key => $value) {
             ob_start();
-            include_once Application::$ROOT_DIR . "/views/{$value}.php";
+            include_once Application::$ROOT_DIR . "/Views/{$value}.php";
             $layout[$key] = ob_get_contents();
             ob_end_clean();
         }
@@ -64,7 +64,7 @@ class View
         // echo var_dump($contentAddress);
         foreach ($contentAddress as $key => $value) {
             ob_start();
-            include_once Application::$ROOT_DIR . "/views/{$value}.php";
+            include_once Application::$ROOT_DIR . "/Views/{$value}.php";
             $layout[$key] = ob_get_contents();
             ob_end_clean();
         }
@@ -87,7 +87,7 @@ class View
         }
 
         ob_start();
-        include_once Application::$ROOT_DIR . "/views/{$view}.php";
+        include_once Application::$ROOT_DIR . "/Views/{$view}.php";
         return ob_get_clean();
     }
 }
