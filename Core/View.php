@@ -4,43 +4,90 @@ namespace NRZero\JASF\Core;
 
 class View
 {
-    public function loadView(string $viewAddress, array $layoutAddress = null)
+    public function loadView(string $viewAddress, array $contentAddress = [], array $params = [], string $mode = "variable")
     {
-        $view = $this->renderView($viewAddress);
-        if ($layoutAddress != null) {
-            $layouts = $this->renderLayout($layoutAddress);
-            if (is_array($layouts)) {
-                foreach ($layouts as $layout) {
-                    yield str_replace("{{$layout}}", $layout, $view);
-                }
-            }
-            yield str_replace("{{$layouts}}", $layout, $view);
+        switch ($mode) {
+            case "variable":
+                return $this->loadViewVariable($viewAddress, $contentAddress, $params);
+                break;
+            case "placeholder":
+                return $this->loadViewPlaceholder($viewAddress, $contentAddress, $params);
+                break;
         }
-        yield $view;
     }
 
-    public function renderLayout(string|array $layoutAddress)
+    // using string like '{{content}}' as placeholder
+    public function loadViewPlaceholder(string $viewAddress, array $contentAddress = [], array $params = [])
     {
-        ob_start();
-        if (is_array($layoutAddress)) {
-            foreach ($layoutAddress as $layout => $value) {
-                include_once Application::$ROOT_DIR . "/views/$value";
+        if (empty($contentAddress)) {
+            return $this->renderView($viewAddress, $params);
+        }
+
+        if (!empty($params)) {
+            foreach ($params as $key => $value) {
+                $$key = $value;
             }
-        } else {
-            include_once Application::$ROOT_DIR . "/views/$layoutAddress";
+        }
+
+        $layout = [];
+        $view = $this->renderView($viewAddress, $params);
+        // echo var_dump($contentAddress);
+        foreach ($contentAddress as $key => $value) {
+            ob_start();
+            include_once Application::$ROOT_DIR . "/views/{$value}.php";
+            $layout[$key] = ob_get_contents();
+            ob_end_clean();
         }
         // include_once Application::$ROOT_DIR . "/views/dashboard/hero/index.php";
-        return ob_get_clean();
+
+        foreach ($layout as $key => $value) {
+            $view = str_replace("{{{$key}}}", $value, $view);
+        }
+        return $view;
+        // return str_replace("{{content}}", $layout, $view);
     }
 
-    public function renderView(string $view, array $params = [])
+    // using echo variable
+    public function loadViewVariable(string $viewAddress, array $contentAddress = [], array $params = [])
     {
-        foreach ($params as $key => $value) {
-            $$key = $value;
+        if (empty($contentAddress)) {
+            return $this->renderView($viewAddress, $params);
+        }
+
+        if (!empty($params)) {
+            foreach ($params as $key => $value) {
+                $$key = $value;
+            }
+        }
+
+        $layout = [];
+        // echo var_dump($contentAddress);
+        foreach ($contentAddress as $key => $value) {
+            ob_start();
+            include_once Application::$ROOT_DIR . "/views/{$value}.php";
+            $layout[$key] = ob_get_contents();
+            ob_end_clean();
+        }
+        // include_once Application::$ROOT_DIR . "/views/dashboard/hero/index.php";
+        return $this->renderView($viewAddress, $params, $layout);
+    }
+
+    private function renderView(string $view, array $params = [], array $layout = [])
+    {
+        if (!empty($params)) {
+            foreach ($params as $key => $value) {
+                $$key = $value;
+            }
+        }
+
+        if (!empty($layout)) {
+            foreach ($layout as $key => $value) {
+                $$key = $value;
+            }
         }
 
         ob_start();
-        include_once Application::$ROOT_DIR . "/views/$view";
+        include_once Application::$ROOT_DIR . "/views/{$view}.php";
         return ob_get_clean();
     }
 }

@@ -2,6 +2,13 @@
 
 namespace NRZero\JASF\Core;
 
+/**
+ * Class Application
+ * 
+ * @author Daniel Ronaldo Pangestu <ronaldo.pangestu1@gmail.com>
+ * @package Dsystem\Core
+ */
+
 class Application
 {
     public Router $router;
@@ -27,8 +34,10 @@ class Application
 
     public function run()
     {
-        foreach ($this->router->resolve() as $value) {
+        /* foreach ($this->router->resolve() as $key => $value)
+        {
             echo $value;
-        }
+        } */
+        echo $this->router->resolve();
     }
 }
