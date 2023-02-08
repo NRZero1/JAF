@@ -13,9 +13,12 @@ class Response
      * Redirect page
      * @param string $url    destination url
      * @param string $method refresh|auto
-     *                       refresh = refresh the current active page
-     *                       auto = normal redirect
-     *                       set htttp response code will be implemented later
+     * 
+     * refresh = refresh the current active page
+     * 
+     * auto = normal redirect
+     * 
+     * set htttp response code will be implemented later
      */
     public function redirect(string $url, string $method = 'auto')
     {
