@@ -1,6 +1,6 @@
 <?php
 
-namespace NRZero\JASF\Core;
+namespace NRZero\JAF\Core;
 
 use PDO;
 use PDOException;

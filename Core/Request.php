@@ -1,6 +1,6 @@
 <?php
 
-namespace NRZero\JASF\Core;
+namespace NRZero\JAF\Core;
 
 class Request
 {
