@@ -8,6 +8,7 @@ class Router
     private Request $request;
     private Response $response;
     private View $view;
+
     public function __construct(Request $request, Response $response)
     {
         $this->request = new $request;
@@ -33,7 +34,7 @@ class Router
 
         if ($callback === false) {
             $this->response->setResponseCode(404);
-            exit($this->view->loadView("not_found.php"));
+            exit($this->view->loadView("Not_Found"));
         }
         if (is_string($callback)) {
             return $this->view->loadView($callback);
@@ -43,25 +44,4 @@ class Router
         }
         return call_user_func($callback);
     }
-
-    // public function loadView(string $viewAddress)
-    // {
-    //     $layout = $this->renderLayout();
-    //     $view = $this->renderView($viewAddress);
-    //     return str_replace("{content}", $layout, $view);
-    // }
-
-    // public function renderLayout()
-    // {
-    //     ob_start();
-    //     include_once Application::$ROOT_DIR . "/views/dashboard/hero/index.php";
-    //     return ob_get_clean();
-    // }
-
-    // public function renderView(string $view)
-    // {
-    //     ob_start();
-    //     include_once Application::$ROOT_DIR . "/views/$view";
-    //     return ob_get_clean();
-    // }
 }
