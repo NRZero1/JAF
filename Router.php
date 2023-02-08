@@ -1,6 +1,6 @@
 <?php
 
-namespace NRZero\JAF\Core;
+namespace NRZero\JAF;
 
 class Router
 {
