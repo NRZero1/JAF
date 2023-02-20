@@ -22,7 +22,7 @@ On progress
 
 ## Contributing
 
-Lorem Ipsum
+On progress
 
 ## License
 
